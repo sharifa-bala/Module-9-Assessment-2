@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Time App</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h1>World Time App</h1>
+    <div id="local-time">Local Time: <span id="local-time-value"></span></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Flag</th>
+                <th>Current Time</th>
+            </tr>
+        </thead>
+        <tbody id="world-time-table">
+            <!-- Table rows will be populated dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        const countries = [
+                           { name: "Afghanistan", timezone: "Asia/Kabul", flag: "./images/Afghanistan.png" },
+                           { name: "Argentina", timezone: "America/Argentina/Buenos_Aires", flag: "./images/Argentina.png" },
+                           { name: "Australia", timezone: "Australia/Sydney", flag: "./images/Australia.png" },
+                           { name: "Brazil", timezone: "America/Sao_Paulo", flag: "./images/Brazil.png" },
+                           { name: "Canada", timezone: "America/Toronto", flag: "./images/Canada.png" },
+                           { name: "China", timezone: "Asia/Shanghai", flag: "./images/China.png" },
+                           { name: "Egypt", timezone: "Africa/Cairo", flag: "./images/Egypt.png" },
+                           { name: "France", timezone: "Europe/Paris", flag: "./images/France.png" },
+                           { name: "Germany", timezone: "Europe/Berlin", flag: "./images/Germany.png" },
+                           { name: "India", timezone: "Asia/Kolkata", flag: "./images/India.png" },
+                           { name: "Italy", timezone: "Europe/Rome", flag: "./images/Italy.png" },
+                           { name: "Japan", timezone: "Asia/Tokyo", flag: "./images/Japan.png" },
+                           { name: "Mexico", timezone: "America/Mexico_City", flag: "./images/Mexico.png" },
+                           { name: "New Zealand", timezone: "Pacific/Auckland", flag: "./images/New-Zealand.png" },
+                           { name: "Russia", timezone: "Europe/Moscow", flag: "./images/Russia.png" },
+                           { name: "Saudi Arabia", timezone: "Asia/Riyadh", flag: "./images/Saudi-Arabia.png" },
+                           { name: "Turkey", timezone: "Europe/Istanbul", flag: "./images/Turkey.png" },
+                           { name: "United Kingdom", timezone: "Europe/London", flag: "./images/United-Kingdom.png" },
+                           { name: "United States", timezone: "America/New_York", flag: "./images/United-States-of-America.png" },
+                        ];
+
+
+        function updateTime() {
+            const localTimeElement = document.getElementById("local-time-value");
+            const now = new Date();
+            localTimeElement.textContent = now.toLocaleTimeString();
+
+            const tableBody = document.getElementById("world-time-table");
+            tableBody.innerHTML = "";
+
+            countries.forEach(country => {
+                const countryTime = new Date().toLocaleTimeString("en-US", { timeZone: country.timezone });
+                const row = `
+                    <tr>
+                        <td>${country.name}</td>
+                        <td><img src="${country.flag}" alt="${country.name} flag"></td>
+                        <td>${countryTime}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>
